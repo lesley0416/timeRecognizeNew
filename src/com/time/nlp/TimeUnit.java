@@ -15,9 +15,6 @@ import com.time.util.DateUtil;
  * <p>
  * 时间语句分析
  * <p>
- * @author <a href="mailto:kexm@corp.21cn.com">kexm</a>
- * @version 
- * @since 2016年5月4日
  *
  */
 public class TimeUnit
@@ -27,6 +24,15 @@ public class TimeUnit
 	 */
 	public String Time_Expression=null;
 	public String Time_Norm="";
+	
+	/*
+	 * 记录时间的起始位置
+	 * 
+	 * modified by Shi Lixin
+	 */
+	public int startPos = -1;
+	public int endPos = -1;
+	
 	public int[] time_full;
 	public int[] time_origin;
 	private Date time;
@@ -42,13 +48,26 @@ public class TimeUnit
      * 该方法作为时间表达式单元的入口，将时间表达式字符串传入
      * @param exp_time 时间表达式字符串 
 	 * @param n
-	 */
-	
+	 */	
 	public TimeUnit(String exp_time, TimeNormalizer n)
 	{
 		Time_Expression=exp_time;
 		normalizer = n;
-		Time_Normalization();
+//		Time_Normalization();//时间标准化入口，在此之前已经对时间单元识别结束
+	}
+	
+	/**
+	 * 时间表达式单元构造方法
+	 * 参数加入表达式起始位置（逐字）
+	 * modified by Shi Lixin
+	 */
+	public TimeUnit (String exp_time, int  exp_start, int exp_end, TimeNormalizer n) {
+		Time_Expression = exp_time;
+		startPos = exp_start;
+		endPos = exp_end;
+		normalizer = n;
+		
+//		Time_Normalization();//时间标准化入口，在此之前已经对时间单元识别结束
 	}
 	
 	/**
@@ -64,7 +83,8 @@ public class TimeUnit
 		Time_Expression=exp_time;
 		normalizer = n;
 		_tp_origin = contextTp;
-		Time_Normalization();
+		// 当前需求不需要进行标准化过程
+//		Time_Normalization();	//时间标准化入口，在此之前已经对时间单元识别结束
 	}
 	
 	/**
@@ -977,7 +997,7 @@ public class TimeUnit
 	      String[] ini = this.normalizer.getTimeBase().split("-");
 	      c.set(Integer.valueOf(ini[0]).intValue(), Integer.valueOf(ini[1]).intValue()-1, Integer.valueOf(ini[2]).intValue()
 	    	  , Integer.valueOf(ini[3]).intValue(), Integer.valueOf(ini[4]).intValue(), Integer.valueOf(ini[5]).intValue());
-	      System.out.println(DateUtil.formatDateDefault(c.getTime()));
+//	      System.out.println(DateUtil.formatDateDefault(c.getTime()));
 	    }
 	    
 		int curTime = c.get(TUNIT_MAP.get(checkTimeIndex));
