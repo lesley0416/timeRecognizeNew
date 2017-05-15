@@ -225,7 +225,7 @@ public class TimeNormalizer implements Serializable {
 	 */
 	private void preHandling() {
 		target = stringPreHandlingModule.delKeyword(target, "\\s+"); // 清理空白符
-		target = stringPreHandlingModule.delKeyword(target, "[的]+"); // 清理语气助词
+//		target = stringPreHandlingModule.delKeyword(target, "[的]+"); // 清理语气助词
 //		target = stringPreHandlingModule.numberTranslator(target);// 大写数字转化
 		// TODO 处理大小写标点符号
 	}
